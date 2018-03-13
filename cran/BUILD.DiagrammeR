@@ -1,0 +1,32 @@
+load("@com_grail_rules_r//R:defs.bzl", "r_pkg")
+
+package(default_visibility = ["//visibility:public"])
+
+r_pkg(
+    name = "DiagrammeR",
+    srcs = glob(
+        ["**"],
+        exclude = [],
+    ),
+    deps = [
+      "@R_dplyr//:dplyr",
+      "@R_downloader//:downloader",
+      "@R_htmltools//:htmltools",
+      "@R_htmlwidgets//:htmlwidgets",
+      "@R_igraph//:igraph",
+      "@R_influenceR//:influenceR",
+      "@R_magrittr//:magrittr",
+      "@R_purrr//:purrr",
+      "@R_RColorBrewer//:RColorBrewer",
+      "@R_readr//:readr",
+      "@R_rlang//:rlang",
+      "@R_rstudioapi//:rstudioapi",
+      "@R_rgexf//:rgexf",
+      "@R_scales//:scales",
+      "@R_stringr//:stringr",
+      "@R_tibble//:tibble",
+      "@R_tidyr//:tidyr",
+      "@R_viridis//:viridis",
+      "@R_visNetwork//:visNetwork",
+    ],
+)

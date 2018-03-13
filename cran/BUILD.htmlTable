@@ -1,0 +1,20 @@
+load("@com_grail_rules_r//R:defs.bzl", "r_pkg")
+
+package(default_visibility = ["//visibility:public"])
+
+r_pkg(
+    name = "htmlTable",
+    srcs = glob(
+        ["**"],
+        exclude = [],
+    ),
+    deps = [
+      "@R_stringr//:stringr",
+      "@R_knitr//:knitr",
+      "@R_magrittr//:magrittr",
+      "@R_checkmate//:checkmate",
+      "@R_htmlwidgets//:htmlwidgets",
+      "@R_htmltools//:htmltools",
+      "@R_rstudioapi//:rstudioapi",
+    ],
+)

@@ -1,0 +1,88 @@
+Package: fluodilution
+Title: Interpretation of Fluorescence Dilution Experiments
+Description: Fluorescence Dilution (FD) experiments / proliferation assays are
+    used to assess growth and migration at the single-cell level.  With
+    mathematical models parameters such as the division, death and migration
+    rates can be estimated.  This package provides generic functions to
+    manipulate FD data and estimate these parameters.  It has been used both in
+    immunology and microbiology applications.
+Version: 0.2.0
+biocViews: CellBasedAssays, FlowCytometry, CellBiology, MathematicalBiology,
+    Regression, Software
+Authors@R: c(person("Hadrien", "Chauvin", email = "hadrienchauvin@gmail.com", role = c("aut", "cre")),
+    person("Kathryn", "Watson", role = "ctb"),
+    person("Vahid", "Shahrezaei", email = "v.shahrezaei@imperial.ac.uk", role = c("ths", "ctb")),
+    person("David", "Holden", email = "d.holden@imperial.ac.uk", role = c("ths", "lbr")),
+    person("Sophie", "Helaine", email = "s.helaine@imperial.ac.uk", role = "ths"))
+Date: 2016
+Depends:
+    R (>= 3.4.3),
+    nlme (>= 3.1),
+    ggplot2 (>= 2.2.1),
+    stats,
+    scales (>= 0.4)
+Imports:
+    magrittr (>= 1.5),
+    memoise (>= 1.0),
+    stringr (>= 1.3.0),
+    plyr (>= 1.8.3),
+    dplyr (>= 0.4.3),
+    reshape2 (>= 1.4.1),
+    utils,
+    graphics,
+    Rcpp (>= 0.12.2),
+    RcppParallel (>= 4.3)
+URL: https://github.com/hchauvin/fluodilution
+BugReports: https://github.com/hchauvin/fluodilution/issues
+License: MIT, GPL-3
+LazyData: true
+RoxygenNote: 6.0.1
+Suggests:
+    zoo (>= 1.7),
+    lmtest (>= 0.9),
+    sandwich (>= 2.3),
+    testthat (>= 1.0.2),
+    GenSA (>= 1.1.6),
+    truncnorm (>= 1.0.7),
+    mvtnorm (>= 1.0),
+    limSolve (>= 1.5.5),
+    flowCore (>= 1.36),
+    flowWorkspace (>= 3.16),
+    flowClust (>= 3.8),
+    AICcmodavg (>= 2.0),
+    parallel,
+    knitr (>= 1.12),
+    grid,
+    gridExtra (>= 2.2.1),
+    RColorBrewer (>= 1.1),
+    numDeriv,
+    bbmle (>= 1.0),
+    stats4,
+    microbenchmark (>= 1.4)
+VignetteBuilder: knitr
+LinkingTo: Rcpp, RcppParallel, RcppArmadillo (>= 0.8.300.1.0)
+SystemRequirements: GNU make
+Collate: 
+    'RcppExports.R'
+    'create.R'
+    'cstr.R'
+    'fd_model.R'
+    'fd_simulate.R'
+    'fetch.R'
+    'fit.R'
+    'fluodilution.R'
+    'fmm-.R'
+    'fmm-af.R'
+    'fmm-af_bp.R'
+    'fmm-gaussian.R'
+    'gamma-distributions.R'
+    'graphics.R'
+    'modsel.R'
+    'peaks.R'
+    'population.R'
+    'pretty.R'
+    'proliferation-.R'
+    'proliferation-branching.R'
+    'proliferation-cyton.R'
+    'proportions.R'
+    'release-questions.R'

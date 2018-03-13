@@ -1,0 +1,11 @@
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+  name = "QuahAndParish",
+  srcs = ["data/QuahAndParish.rda"],
+)
+
+filegroup(
+  name = "PKH26data",
+  srcs = ["data/PKH26data.rda"],
+)

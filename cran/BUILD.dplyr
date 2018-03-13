@@ -1,0 +1,24 @@
+load("@com_grail_rules_r//R:defs.bzl", "r_pkg")
+
+package(default_visibility = ["//visibility:public"])
+
+r_pkg(
+    name = "dplyr",
+    srcs = glob(
+        ["**"],
+        exclude = [],
+    ),
+    deps = [
+      "@R_assertthat//:assertthat",
+      "@R_bindrcpp//:bindrcpp",
+      "@R_glue//:glue",
+      "@R_magrittr//:magrittr",
+      "@R_pkgconfig//:pkgconfig",
+      "@R_rlang//:rlang",
+      "@R_R6//:R6",
+      "@R_Rcpp//:Rcpp",
+      "@R_tibble//:tibble",
+      "@R_BH//:BH",
+      "@R_plogr//:plogr",
+    ],
+)

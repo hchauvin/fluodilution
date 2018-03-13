@@ -1,0 +1,17 @@
+load("@com_grail_rules_r//R:defs.bzl", "r_pkg")
+
+package(default_visibility = ["//visibility:public"])
+
+r_pkg(
+    name = "gplots",
+    srcs = glob(
+        ["**"],
+        exclude = [],
+    ),
+    deps = [
+      "@R_gtools//:gtools",
+      "@R_gdata//:gdata",
+      "@R_caTools//:caTools",
+      "@R_KernSmooth//:KernSmooth",
+    ],
+)

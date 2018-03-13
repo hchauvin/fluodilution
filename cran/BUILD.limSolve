@@ -1,0 +1,16 @@
+load("@com_grail_rules_r//R:defs.bzl", "r_pkg")
+
+package(default_visibility = ["//visibility:public"])
+
+r_pkg(
+    name = "limSolve",
+    srcs = glob(
+        ["**"],
+        exclude = [],
+    ),
+    deps = [
+      "@R_quadprog//:quadprog",
+      "@R_lpSolve//:lpSolve",
+      "@R_MASS//:MASS",
+    ],
+)

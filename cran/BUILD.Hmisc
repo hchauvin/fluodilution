@@ -1,0 +1,31 @@
+load("@com_grail_rules_r//R:defs.bzl", "r_pkg")
+
+package(default_visibility = ["//visibility:public"])
+
+r_pkg(
+    name = "Hmisc",
+    srcs = glob(
+        ["**"],
+        exclude = [],
+    ),
+    deps = [
+      "@R_lattice//:lattice",
+      "@R_survival//:survival",
+      "@R_Formula//:Formula",
+      "@R_ggplot2//:ggplot2",
+      "@R_latticeExtra//:latticeExtra",
+      "@R_cluster//:cluster",
+      "@R_rpart//:rpart",
+      "@R_nnet//:nnet",
+      "@R_acepack//:acepack", 
+      "@R_foreign//:foreign",
+      "@R_gtable//:gtable",
+      #"@R_grid//:grid",
+      "@R_gridExtra//:gridExtra",
+      "@R_data_table//:data_table",
+      "@R_htmlTable//:htmlTable",
+      "@R_viridis//:viridis",
+      "@R_htmltools//:htmltools",
+      "@R_base64enc//:base64enc",
+    ],
+)

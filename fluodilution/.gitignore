@@ -1,0 +1,39 @@
+article/data-raw
+
+# Logs, databases and auxilary #
+################################
+*.log
+*.sql
+*.sqlite
+*.aux
+*.bbl
+*.blg
+.Rapp.history
+.Rproj.user
+.Rhistory
+.RData
+packrat/lib*/
+
+# Compiled source #
+###################
+*.[oa]
+
+# Temporary files #
+###################
+*.swp
+*.swo
+*~
+^.build.timestamp$
+monitor
+.Rd2pdf*
+~*.docx
+*.ist
+*.synctex.gz
+*.toc
+
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db

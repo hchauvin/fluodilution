@@ -1,0 +1,43 @@
+load("@com_grail_rules_r//R:defs.bzl", "r_pkg", "r_pkg_test", "r_unit_test")
+
+package(default_visibility = ["//visibility:public"])
+
+r_pkg(
+    name = "flowWorkspace",
+    srcs = glob(
+        ["**"],
+        exclude = [
+          "**/*inst/cppTest/**/*",
+        ],
+    ),
+    deps = [
+      "@R_flowCore//:flowCore",
+      "@R_ncdfFlow//:ncdfFlow",
+      "@R_Biobase//:Biobase",
+      "@R_BiocGenerics//:BiocGenerics",
+      "@R_graph//:graph",
+      "@R_RBGL//:RBGL",
+      "@R_XML//:XML",
+      "@R_gridExtra//:gridExtra",
+      "@R_Rgraphviz//:Rgraphviz",
+      "@R_data_table//:data_table",
+      "@R_dplyr//:dplyr",
+      "@R_latticeExtra//:latticeExtra",
+      "@R_Rcpp//:Rcpp",
+      "@R_RColorBrewer//:RColorBrewer",
+      "@R_stringr//:stringr",
+      "@R_scales//:scales",
+      "@R_flowViz//:flowViz",
+      "@R_RProtoBufLib//:RProtoBufLib",
+      "@R_cytolib//:cytolib",
+    ],
+    cc_deps = [
+      "@com_google_protobuf_2_6_0//:protobuf",
+      ":hdrs",
+    ],
+)
+
+cc_library(
+  name = "hdrs",
+  includes = ["inst/include"],
+)

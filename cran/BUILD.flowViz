@@ -1,0 +1,19 @@
+load("@com_grail_rules_r//R:defs.bzl", "r_pkg")
+
+package(default_visibility = ["//visibility:public"])
+
+r_pkg(
+    name = "flowViz",
+    srcs = glob(
+        ["**"],
+        exclude = [],
+    ),
+    deps = [
+      "@R_lattice//:lattice",
+      "@R_flowCore//:flowCore",
+      "@R_latticeExtra//:latticeExtra",
+      "@R_RColorBrewer//:RColorBrewer",
+      "@R_hexbin//:hexbin",
+      "@R_IDPmisc//:IDPmisc",
+    ],
+)

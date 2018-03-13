@@ -1,0 +1,17 @@
+load("@com_grail_rules_r//R:defs.bzl", "r_pkg")
+
+package(default_visibility = ["//visibility:public"])
+
+r_pkg(
+    name = "psych",
+    srcs = glob(
+        ["**"],
+        exclude = [],
+    ),
+    deps = [
+      "@R_mnormt//:mnormt",
+      "@R_foreign//:foreign",
+      "@R_lattice//:lattice",
+      "@R_nlme//:nlme",
+    ],
+)

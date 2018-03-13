@@ -1,0 +1,21 @@
+load("@com_grail_rules_r//R:defs.bzl", "r_pkg")
+
+package(default_visibility = ["//visibility:public"])
+
+r_pkg(
+    name = "testthat",
+    srcs = glob(
+        ["**"],
+        exclude = [],
+    ),
+    deps = [
+      "@R_cli//:cli",
+      "@R_crayon//:crayon",
+      "@R_digest//:digest",
+      "@R_magrittr//:magrittr",
+      "@R_praise//:praise",
+      "@R_R6//:R6",
+      "@R_rlang//:rlang",
+      "@R_withr//:withr",
+    ],
+)

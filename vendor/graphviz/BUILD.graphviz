@@ -1,0 +1,87 @@
+cc_library(
+  name = "lib_pathplan",
+  hdrs = ["lib/pathplan/" + f for f in [
+    "pathgeom.h", "pathplan.h",
+  ]],
+  includes = ["lib/pathplan"],
+)
+
+cc_library(
+  name = "lib_cdt",
+  hdrs = ["lib/cdt/" + f for f in [
+    "cdt.h",
+  ]],
+  includes = ["lib/cdt"],
+)
+
+cc_library(
+  name = "lib_cgraph",
+  hdrs = ["lib/cgraph/" + f for f in [
+    "cgraph.h",
+  ]],
+  includes = ["lib/cgraph"],
+  deps = [
+    ":lib_cdt",
+  ],
+)
+
+cc_library(
+  name = "lib_pack",
+  hdrs = ["lib/pack/" + f for f in [
+    "pack.h",
+  ]],
+  includes = ["lib/pack"],
+  deps = [
+    #":lib_neatogen",
+    ":lib_pathplan",
+    ":lib_cgraph",
+    ":lib_cdt",
+  ],
+)
+
+cc_library(
+  name = "lib_xdot",
+  hdrs = ["lib/xdot/" + f for f in [
+    "xdot.h",
+  ]],
+  includes = ["lib/xdot"],
+  deps = [],
+)
+
+cc_library(
+  name = "lib_common",
+  hdrs = ["lib/common/" + f for f in [
+    "arith.h", "geom.h", "color.h", "types.h", "textspan.h", "usershape.h",
+  ]],
+  includes = ["lib/common"],
+  deps = [
+    ":lib_pack",
+    #":lib_label",
+    ":lib_xdot",
+    #":lib_fdpgen",
+    ":lib_pathplan",
+    ":lib_cgraph",
+  ],
+)
+
+cc_library(
+  name = "lib_gvc",
+  # srcs = ["lib/gvc/" + f for f in [
+  #   "gvcint.h", "gvcproc.h", "gvio.h",
+  #   "gvrender.c", "gvlayout.c", "gvdevice.c", "gvloadimage.c",
+	#   "gvcontext.c", "gvjobs.c", "gvevent.c", "gvplugin.c", "gvconfig.c",
+	#   "gvtool_tred.c", "gvtextlayout.c", "gvusershape.c", "gvc.c",
+  # ]],
+  hdrs = ["lib/gvc/" + f for f in [
+    "gvc.h", "gvcext.h", "gvplugin.h", "gvcjob.h",
+	  "gvcommon.h", "gvplugin_render.h", "gvplugin_layout.h", "gvconfig.h",
+  ]],
+  includes = ["lib/gvc"],
+  deps = [
+    ":lib_common",
+    ":lib_pathplan",
+    ":lib_cgraph",
+    ":lib_cdt",
+  ],
+  visibility = ["//visibility:public"],
+)

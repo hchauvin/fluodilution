@@ -1,0 +1,23 @@
+load("@com_grail_rules_r//R:defs.bzl", "r_pkg")
+
+package(default_visibility = ["//visibility:public"])
+
+r_pkg(
+    name = "flowClust",
+    srcs = glob(
+        ["**"],
+        exclude = [],
+    ),
+    deps = [
+      "@R_BiocGenerics//:BiocGenerics",
+      "@R_MCMCpack//:MCMCpack",
+      "@R_Biobase//:Biobase",
+      "@R_graph//:graph",
+      "@R_RBGL//:RBGL",
+      "@R_ellipse//:ellipse",
+      "@R_flowViz//:flowViz",
+      "@R_flowCore//:flowCore",
+      "@R_clue//:clue",
+      "@R_mnormt//:mnormt",
+    ],
+)

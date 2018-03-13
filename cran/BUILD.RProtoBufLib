@@ -1,0 +1,17 @@
+load("@com_grail_rules_r//R:defs.bzl", "r_pkg")
+
+package(default_visibility = ["//visibility:public"])
+
+r_pkg(
+    name = "RProtoBufLib",
+    srcs = glob(
+        ["**"],
+        exclude = [
+            "**/*inst/doc/Makefile*",
+            "**/*inst/doc/Makefile*/**",
+        ],
+    ),
+    deps = [],
+    cc_deps = ["@com_google_protobuf_2_6_0//:protobuf"],
+    config_override = "@com_grail_rules_r//R:configure.empty",
+)

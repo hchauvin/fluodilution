@@ -1,0 +1,26 @@
+load("@com_grail_rules_r//R:defs.bzl", "r_pkg")
+
+package(default_visibility = ["//visibility:public"])
+
+r_pkg(
+    name = "RcppParallel",
+    srcs = glob(
+        ["**"],
+        exclude = [
+          "**/*inst/presentations/**",
+          "**/*inst/skeleton/**",
+          "**/*inst/tests/**",
+        ],
+    ),
+    post_install_files = [
+      "lib/libtbb.so",
+      "lib/libtbb.so.2",
+      "lib/libtbbmalloc.so",
+      "lib/libtbbmalloc.so.2",
+      "lib/libtbbmalloc_proxy.so",
+      "lib/libtbbmalloc_proxy.so.2",
+    ],
+    deps = [
+      "@R_BH//:BH",
+    ],
+)

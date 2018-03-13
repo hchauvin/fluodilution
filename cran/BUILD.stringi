@@ -1,0 +1,17 @@
+load("@com_grail_rules_r//R:defs.bzl", "r_pkg")
+
+package(default_visibility = ["//visibility:public"])
+
+r_pkg(
+    name = "stringi",
+    srcs = glob(
+        ["**"],
+        exclude = [],
+    ),
+    install_args = "--configure-args='--disable-pkg-config'",
+    post_install_files = [
+        "libs/LICENSE.txt",
+        "libs/icudt55l.dat",
+    ],
+    deps = [],
+)

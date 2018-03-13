@@ -1,0 +1,18 @@
+load("@com_grail_rules_r//R:defs.bzl", "r_pkg")
+
+package(default_visibility = ["//visibility:public"])
+
+r_pkg(
+    name = "knitr",
+    srcs = glob(
+        ["**"],
+        exclude = [],
+    ),
+    deps = [
+      "@R_evaluate//:evaluate",
+      "@R_highr//:highr",
+      "@R_markdown//:markdown",
+      "@R_stringr//:stringr",
+      "@R_yaml//:yaml",
+    ],
+)

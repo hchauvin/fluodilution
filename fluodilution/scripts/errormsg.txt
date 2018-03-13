@@ -1,0 +1,246 @@
+$`/Users/chauvin/academe/fdArticleWorkflow/fluodilution/fluodilution/R/create.R`
+'meta' attribute is required
+'channel' attribute is required
+'value$flow' must be either a 'GatingSet' (flowWorkspace)
+or a 'flowSet' (flowCore)
+package 'flowCore' is required
+package 'flowWorkspace' is required
+'Sample' not in meta, but 'Set' is
+more than one 't=min/0h' timepoint for the same inoculum
+(see above); the last one is used
+package 'flowClust' is required
+package 'parallel' must be added to the search path
+using: 'library(parallel)'
+for 'flowClust' to work
+class not handled
+
+$`/Users/chauvin/academe/fdArticleWorkflow/fluodilution/fluodilution/R/cstr.R`
+parameters must be valid language elements
+(name, call, expression)
+some constraints are not valid
+'cstr' should be a valid constraint
+'fit' is not a vector nor an object with coefficients
+'fit' does not have named elements
+some arguments are not constraints
+'sub' must be language
+'expr' must be a constraint
+More than one substitution possible
+'param', 'lower' and 'upper' must have the same length
+lower > upper
+'param' is outside boundary
+wrong prefix format
+'parsecstr' does not allow expressions with
+multiple terms
+empty expression
+terms must be of the form 'a <- b'
+unknown syntax
+
+$`/Users/chauvin/academe/fdArticleWorkflow/fluodilution/fluodilution/R/fd_model.R`
+'data' his not an 'fd_data'
+'boxed' should be either TRUE or FALSE
+'constraints' should be a valid constraint
+'partial' should be numeric
+the constraints must contain 'fmm' and 'pro'
+and nothing else
+'constraints': categories in wrong order
+'partial' is of length 0
+'partial': some elements are not present in
+constraints
+'partial': some elements are duplicated
+no free parameter
+'start' is not within model boundary
+lower, upper and start have different structure:
+start has names
+paste0(collapse = ", ", names(unlist(ret$start)))
+]; lower has names (+/- start) [
+paste0(collapse = ", ", list_diff(names(unlist(ret$lower)), base = names(unlist(ret$start))))
+]; upper has names (+/- start [
+paste0(collapse = ", ", list_diff(names(unlist(ret$upper)), base = names(unlist(ret$start))))
+]
+some parameters in 'constraints' do not exist in 'start':
+paste(orphan, collapse = " ")
+'model' is not an 'fd_model'
+'clean' must be logical
+'addcstr' should be a valid constraint
+some 'start' params are constrained
+'object' is not an 'fd_model'
+'param' is not structured according to the model (wrong names)
+'mgen' not big enough for 'prop': should be at least
+should_mGen
+internal error
+'theta' is not finite
+parameters out of bounds
+the data do not have the right categories
+'params' must be a matrix
+'globalname' must be a character string and sits in
+the global environment
+'
+globalname
+' is not an 'fd_model'
+
+$`/Users/chauvin/academe/fdArticleWorkflow/fluodilution/fluodilution/R/fd_simulate.R`
+'select' has wrong format
+'categories' is NULL
+'m0' or 'sd0' not available from FMM and no
+'range' specified
+'noise': invalid format
+'coverage' must be between 0 and 1
+'fd_norm' requires package 'truncnorm'
+'cv' must be between 0 and 1
+non-numeric argument n.
+no model specified, either through 'params' or 'model'
+'params' must either be the result of a fit,
+a vector or a matrix
+parameter "
+colnames(params)[i]
+" is out of bounds
+
+$`/Users/chauvin/academe/fdArticleWorkflow/fluodilution/fluodilution/R/fetch.R`
+A character string for an FMM object has been given,
+but 'data' is 'NULL':
+using default values for sd0/m0
+FMM object does not inherit "fd_fmm"
+A character string for a proliferation object has
+been given, but 'data'
+is 'NULL': using default values
+a character string for a proliferation object has
+is empty
+proliferation model object does not inherit
+"fd_proliferation"
+
+$`/Users/chauvin/academe/fdArticleWorkflow/fluodilution/fluodilution/R/fit.R`
+guessed 'mgen' greater than 16, capped at 16
+'mgen' (
+mgen
+) is probably not big enough
+) is probably not big enough,
+fitting again with mgen=
+mGen_new
+paste(names(coef(ans))[hit_boundary], collapse = ", ")
+hit the boundary: you probably want to use more constraints
+fd_residuals: no object was provided
+'
+nm
+' not found in 'data' list
+'newdata' is missing
+no model specified
+package 'mvtnorm' required for 'relisted_vcov'
+internal error
+'group_hists == FALSE' but some histograms
+stand alone so rates cannot be determined.
+'parallel' must be installed for 'mc.cores > 0'
+Using parallel computing with
+mc.cores
+cores
+
+$`/Users/chauvin/academe/fdArticleWorkflow/fluodilution/fluodilution/R/fmm-.R`
+'sd0 > m0' for some inoculums
+
+$`/Users/chauvin/academe/fdArticleWorkflow/fluodilution/fluodilution/R/fmm-af_bp.R`
+either 'sd0' or 'm0' is NULL
+multiple m0/sd0 not supported with fd_fmm_af_bp
+'gen' must specify valid generations
+'psi$ftor' and 'psi$sdaf' must be specified
+
+$`/Users/chauvin/academe/fdArticleWorkflow/fluodilution/fluodilution/R/fmm-af.R`
+either 'sd0' or 'm0' is NULL
+multiple m0/sd0 not supported with fd_fmm_af
+'gen' must specify valid generations
+psi$sdaf' must be specified
+as.vector(int)
+
+$`/Users/chauvin/academe/fdArticleWorkflow/fluodilution/fluodilution/R/fmm-gaussian.R`
+either 'sd0' or 'm0' is NULL
+'gen' must specify valid generations
+'psi$i' must be specified
+'psi$i' is not a valid inoculum
+
+$`/Users/chauvin/academe/fdArticleWorkflow/fluodilution/fluodilution/R/gamma-distributions.R`
+'mm' (=
+dst$mm
+) is negative or 0
+'ss' (=
+dst$ss
+) must be fixed to 0.5 when 'delta == 0'
+) must be between 0 (excluded) and 0.5
+'delta' (=
+dst$delta
+) must be greater than or equal to 0
+fd_ddist with delta=0 can only be called on a vector!!!
+
+$`/Users/chauvin/academe/fdArticleWorkflow/fluodilution/fluodilution/R/graphics.R`
+package 'numDeriv' has to be installed for stat_unitarea to work
+package 'numDeriv' has to be installed for transform_hist to work
+
+$`/Users/chauvin/academe/fdArticleWorkflow/fluodilution/fluodilution/R/modsel.R`
+no model to select from
+fd_aictab: model group '
+nm
+' is null or empty
+and won't be taken into account
+'AICcmodavg' required
+relisted coefficients do not share a common structure
+Best model:
+modname
+
+$`/Users/chauvin/academe/fdArticleWorkflow/fluodilution/fluodilution/R/peaks.R`
+'zoo' package is required for 'fd_findpeaks'
+
+$`/Users/chauvin/academe/fdArticleWorkflow/fluodilution/fluodilution/R/population.R`
+'data' should be a 'data.frame' (or a 'groupedData')
+'data' does not have the required column names
+paste(reqcolnames, collapse = ", ")
+Some 'Ns' are -Inf: you probably want to use a
+'log1p' transform.
+Some 'y' are not finite for histograms.
+Some 'y' are not finite for proportions.
+Some fields are not specified (NA), this could
+lead to errors.
+Some categories are convertible to 'numeric'; we advise
+against this convertibility.  Perhaps you should prefix
+current names with a character string such as
+"cate_".
+Some individuals are convertible to 'numeric'; we advise
+"indiv_".
+Some inoculums are convertible to 'numeric'; we advise
+"inoc_".
+Some timepoints are convertible to 'numeric'; we advise
+"tp_".
+'fmm$m0' does not have matching names with
+'data$Inoculum' (levels must be
+in the exact same order):
+fmm$m0 names =
+dput(names(m0))
+; data$Inoculum names =
+dput(inocs)
+.
+'fmm$sd0' does not have matching names with
+fmm$sd0 names =
+dput(names(sd0))
+Some histograms do not have proportions that sum to 1.
+Some timepoints do not have proportions that sum to 1.
+'cutoff' needs to be named
+no 'fmm$m0' to calculate cutoff
+'cutoff' called but the dataset presents no
+'cutoff' attribute
+'cutoff' names and 'Timepoint' levels are not the same
+or exactly in the same order
+nothing to separate
+
+$`/Users/chauvin/academe/fdArticleWorkflow/fluodilution/fluodilution/R/pretty.R`
+when 'type' is "overview" or "all",
+it cannot specify other types
+type: duplicated elements
+cannot plot coverage if 'counts' is missing
+
+$`/Users/chauvin/academe/fdArticleWorkflow/fluodilution/fluodilution/R/proliferation-branching.R`
+'initial' must be a matrix of dimensions
+(number of categories) x (mgen+1)
+wrong categories or in the wrong order
+'precalculate' already called
+'precalculate' was called with different arguments
+
+$`/Users/chauvin/academe/fdArticleWorkflow/fluodilution/fluodilution/R/proportions.R`
+'limSolve' is required for 'fd_gaussian_fmm_solve'
+FD_gaussian_fmm_solve: internal error
+

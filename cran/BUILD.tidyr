@@ -1,0 +1,22 @@
+load("@com_grail_rules_r//R:defs.bzl", "r_pkg")
+
+package(default_visibility = ["//visibility:public"])
+
+r_pkg(
+    name = "tidyr",
+    srcs = glob(
+        ["**"],
+        exclude = [],
+    ),
+    deps = [
+      "@R_dplyr//:dplyr",
+      "@R_glue//:glue",
+      "@R_magrittr//:magrittr",
+      "@R_purrr//:purrr",
+      "@R_Rcpp//:Rcpp",
+      "@R_rlang//:rlang",
+      "@R_stringi//:stringi",
+      "@R_tibble//:tibble",
+      "@R_tidyselect//:tidyselect",
+    ],
+)

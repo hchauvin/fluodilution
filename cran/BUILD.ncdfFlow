@@ -1,0 +1,22 @@
+load("@com_grail_rules_r//R:defs.bzl", "r_pkg")
+
+package(default_visibility = ["//visibility:public"])
+
+r_pkg(
+    name = "ncdfFlow",
+    srcs = glob(
+        ["**"],
+        exclude = [],
+    ),
+    deps = [
+        "@R_flowCore//:flowCore",
+        "@R_RcppArmadillo//:RcppArmadillo",
+        "@R_BH//:BH",
+        "@R_Biobase//:Biobase",
+        "@R_BiocGenerics//:BiocGenerics",
+        "@R_flowViz//:flowViz",
+        "@R_zlibbioc//:zlibbioc",
+        "@R_Rcpp//:Rcpp",
+        "@R_Rhdf5lib//:Rhdf5lib",
+    ],
+)

@@ -1,0 +1,18 @@
+load("@com_grail_rules_r//R:defs.bzl", "r_pkg")
+
+package(default_visibility = ["//visibility:public"])
+
+r_pkg(
+    name = "readr",
+    srcs = glob(
+        ["**"],
+        exclude = [],
+    ),
+    deps = [
+      "@R_Rcpp//:Rcpp",
+      "@R_tibble//:tibble",
+      "@R_hms//:hms",
+      "@R_R6//:R6",
+      "@R_BH//:BH",
+    ],
+)

@@ -1,0 +1,48 @@
+# See travis-ci.org
+
+language: r
+sudo: false
+warnings_are_errors: true
+cache: packages
+r: bioc-devel
+env:
+  # Some bioconductor packages require C++11 support
+  - SHLIB_CXXLD=g++-6 CXX=g++-6 CXX11=g++-6 PKG_CXXFLAGS="-std=c++11"
+
+addons:
+  apt:
+    sources:
+      - sourceline: ppa:ubuntu-toolchain-r/test
+    packages:
+      # As of 27 March 2017, travis comes with g++ 4.6.3, but the
+      # first feature complete G++ is 4.8.1
+      # (https://gcc.gnu.org/projects/cxx-status.html)
+      - g++-6
+      - libhdf5-7
+      - libhdf5-dev
+      - libboost-all-dev
+      - r-bioc-rgraphviz
+      - r-bioc-rbgl
+      - r-bioc-zlibbioc
+      - r-bioc-graph
+      - r-bioc-biobase
+      # RcppArmadillo
+      - libgfortran-6-dev
+
+r_github_packages:
+  - jimhester/covr
+
+before_install:
+  # See https://github.com/travis-ci/travis-ci/issues/3668
+  - mkdir -p latest-gcc-symlinks
+  - ln -s /usr/bin/g++-6 latest-gcc-symlinks/g++
+  - ln -s /usr/bin/gcc-6 latest-gcc-symlinks/gcc
+  - export PATH=$PWD/latest-gcc-symlinks:$PATH
+
+after_success:
+  - Rscript -e 'covr::codecov()'
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change

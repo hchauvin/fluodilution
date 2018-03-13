@@ -1,0 +1,20 @@
+load("@com_grail_rules_r//R:defs.bzl", "r_pkg")
+
+package(default_visibility = ["//visibility:public"])
+
+r_pkg(
+    name = "broom",
+    srcs = glob(
+        ["**"],
+        exclude = [],
+    ),
+    deps = [
+      "@R_plyr//:plyr",
+      "@R_dplyr//:dplyr",
+      "@R_tidyr//:tidyr",
+      "@R_psych//:psych",
+      "@R_stringr//:stringr",
+      "@R_reshape2//:reshape2",
+      "@R_nlme//:nlme",
+    ],
+)

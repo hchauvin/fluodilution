@@ -1,0 +1,78 @@
+list(
+  # --- Global ---
+
+  # No 'ss' (third parameter of shifted gamma distributions)
+  `#noss` = ~ pro:all:(f0/f/g0/g):{ss <- 0.5},
+
+  # No death, only division
+  `#nodeath` = ~ pro:all:((g0/g):{ss <- 0.5; delta <- 1; mm <- 1} +
+                                 {p <- 1; p0 <- 1}),
+
+  # --- On 'delta' ---
+  # Convention: '#delta_abcd', with abcd the constraints respectively
+  # on f0, f, g0 and g.
+
+  # Exponential model
+  `#delta_1111` = ~ pro:all:(f0/f/g0/g):{delta <- 1},
+
+  # Exponential then fixed-length cell cycles
+  `#delta_1100` = ~ pro:all:((f0/g0):{delta <- 1} + (f/g):{delta <- 0.01}),
+  `#delta_1101` = ~ pro:all:((f0/g0/g):{delta <- 1} + f:{delta <- 0.01}),
+
+  # DGH-like model (Deenick et al. 2003)
+  `#delta_a101` = ~ pro:all:((g0/g):{delta <- 1} + f:{delta <- 0.01}),
+
+  `#delta_aaaa` = ~ pro:all:((f0/g0/g):{delta <- .L2$f$delta}),
+  `#delta_aabb` = ~ pro:all:(g0:{delta <- .L2$f0$delta} +
+                             g:{delta <- .L2$f$delta}),
+  `#delta_abab` = ~ pro:all:(f0:{delta <- .L2$f$delta} +
+                             g0:{delta <- .L2$g$delta}),
+  `#delta_11a1` = ~ pro:all:(f0/g0/g):{delta <- 1},
+  `#delta_1a01` = ~ pro:all:((g0/g):{delta <- 1} + f:{delta <- 0.0}),
+  `#delta_11ab` = ~ pro:all:(f0/g0):{delta <- 1},
+  `#delta_ab00` = ~ pro:all:((f/g):{delta <- 0.0}),
+
+  # --- On 'mm' ---
+  # Convention: '#mm_xyzw', with xyzw the constraints respectively on
+  # 'f0', 'f', 'g0', 'g'.
+  # If two letters are the same, it means that the two corresponding
+  # distributions are bound together.  The more we progress down the list,
+  # the simpler the model.
+
+  # No constraint on 'mm' (useful for combinatorially combining constraints)
+  `#mm_xyzw` = NULL,
+
+  # Divisions occur at the same pace but death rate free to vary
+  `#mm_xyxz` = ~ pro:all:(f0:{mm <- .L2$f$mm}),
+
+  # Divisions occur at the same pace and deaths at the same pace (but
+  # different from divisions)
+  `#mm_xyxy` = ~ pro:all:(f0:{mm <- .L2$f$mm} + g0:{mm <- .L2$g$mm}),
+
+  # All the 'mm' are the same: "timescale" model, useful for a very crude
+  # branching process.
+  # In this model, 'mm' only gives a broad order of magnitude of the
+  # transitions (whether division or death)
+  `#mm_xxxx` = ~ pro:all:(f0/g0/g):{mm <- .L2$f$mm},
+
+  # --- On transition probabilities ----
+  # Convention: when relevant, '#p_rst', with rst the constraints respectively
+  # on 'p0', 'res0' and 'p'.  If two letters are the same, it means that the
+  # two corresponding transition probabilities are bound together.
+
+  # The model does not have transition probabilities, e.g. the Cyton model
+  # (useful for "combinatorially" combining constraints)
+  `#p_na` = NULL,
+
+  # No constraint on transition probabilities
+  # (useful for "combinatorially" combining constraints)
+  `#p_rst` = NULL,
+
+  # p0 is the same as p (that is, the proportion of cells that won't die is
+  # always the same)
+  `#p_rsr` = ~ pro:all:{p0 <- .L1$p},
+
+  # p is p0 * (1 - res0) (that is, the proportion of cells that divide is
+  # always the same)
+  `#p_RsR` = ~ pro:all:{p <- .L1$p0 * (1 - .L1$res0)}
+)

@@ -1,0 +1,21 @@
+load("@com_grail_rules_r//R:defs.bzl", "r_pkg")
+
+package(default_visibility = ["//visibility:public"])
+
+r_pkg(
+    name = "scales",
+    srcs = glob(
+        ["**"],
+        exclude = [],
+    ),
+    deps = [
+      "@R_RColorBrewer//:RColorBrewer",
+      "@R_dichromat//:dichromat",
+      "@R_munsell//:munsell",
+      "@R_labeling//:labeling",
+      "@R_Rcpp//:Rcpp",
+      "@R_R6//:R6",
+      "@R_viridisLite//:viridisLite",
+      "@R_plyr//:plyr",
+    ],
+)

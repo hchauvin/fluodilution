@@ -1,0 +1,222 @@
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{Introduction to package 'fluodilution'}
+\documentclass{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{natbib}
+\usepackage{authblk}
+\bibpunct{(}{)}{;}{a}{,}{,}
+\hyphenation{auto-fluo-rescence}
+\title{\texttt{fluodilution} package:
+  Interpretation of Fluorescence Dilution Experiments}
+\author{Hadrien Chauvin}
+\author{Kathryn Watson}
+\author{Vahid Shahrezaei}
+\author{David Holden}
+\author{Sophie Helaine}
+\affil{Imperial College London}
+\begin{document}
+
+\maketitle
+
+<<message=F,warning=F,echo=F>>=
+options(width=60)
+@
+
+Fluorescence dilution, or FD (and also known as proliferation assay), is a
+technique used
+to get information concerning cell growth at the single-cell level, both in
+immunology \citep{Lyons1994} and microbiology
+\citep{Helaine2014,Helaine2010,Roostalu2008}.
+
+FD makes use of a fluorescent reporter,
+such as a dye like CFSE or a fluorescence protein
+(e.g., GFP) expressed by a plasmid. In both
+cases, the fluorophore is present in fixed quantities in progenitor
+cells/bacteria: therefore, whenever a cell/bacterium divides, the fluorescence 
+is
+approximately halved.  The distribution of fluorescence in the population
+can then be recorded over time using flow cytometry.
+Augmented by cell
+counts / Colony Forming Units (Chauvin et al.,
+2016) or
+the staining of dying/dead
+cells \citep{Hyrien2010}, the resulting dataset can be used to
+infer a
+set of ``biological constants'' such as the growth/death rates or their
+variability.  The \textbf{fluodilution} package provides generic
+functions to manipulate FD data and find these parameters.
+
+\paragraph{} In this vignette, we will show how to fit one of the experiments of
+\citet{Helaine2010}.  In this experiment, primary BMM extracted from C57
+B1/6 mice were infected by
+wild-type 12023s \textit{Salmonella} Typhimurium harbouring the pFCcGi plasmid,
+a plasmid with a constitutive reporter helping in bacterial recognition and
+an inducible reporter used for fluorescence dilution.  The data was acquired
+on a LSRFortessa cytometer (DB).  Raw data is available upon request.
+
+\paragraph{} First, we load the \textbf{fluodilution} package and the dataset.
+This dataset, provided along with the package, is an \texttt{fd\_data} object.
+<<message=F, warning=F>>=
+library(fluodilution)
+data(FdSTyphimuriumWTC57)
+invisible(summary(FdSTyphimuriumWTC57))
+@
+
+\texttt{fd\_data} objects are used by \textbf{fluodilution} to represent
+FD datasets.  They also contain, as \texttt{attributes}, various default
+parameters to shorten calls to functions such as \texttt{cutoff} or
+\texttt{fd\_model} (see below).
+Here, our dataset contains CFU counts in log10 units and 
+fluorescence histograms.
+It is possible to plot an overview of this dataset:
+<<eval=F>>=
+plot(FdSTyphimuriumWTC57, type=c("hist", "N"))
+@
+
+The quality of FD data is lower when fluorescence is lower, as both
+autofluorescence and stochastic partitioning quick in (Chauvin et al. 2016).
+Therefore, it is good practice to gate away low fluorescence using
+\texttt{cutoff}.  \texttt{cutoff} returns an \texttt{fd\_data} object with
+the leftmost part of the histograms, below the cutoff points, removed.
+As a consequence, the proportions do not sum to one anymore.  It
+is possible to jauge the extent of the cutoff by calling \texttt{plot} again
+(and in general \texttt{plot} can be used to output many other diagnostic 
+plots).
+<<>>=
+# plot(FdSTyphimuriumWTC57, type="cutoff")
+dat <- cutoff(FdSTyphimuriumWTC57)
+@
+
+% As a sidenote, the \texttt{One} facet signifies that only one compartment
+% is used.  \textit{In vivo}, multiple compartments are used, and instead of
+% \texttt{One} we would see \texttt{PP} (Peyer's Patches), \texttt{Spleen}, 
+% \ldots
+
+Next, we must construct the FD model with which to interpret the experiment.
+This model specifies a number of parameters to be estimated.  In our
+framework, the model is hierarchical: first, a Finite Mixture Model (FMM)
+translates fluorescence into proportions of cells that have divided a given
+number of times (collectively giving ``division histograms''), followed by
+a proliferation model that explains those proportions in terms of biological
+activity (division, death, migration).  The \texttt{fd\_model} function acts
+as a glue between those two sub-models.
+<<>>=
+mdl <- fd_model(fmm="gaussian", proliferation="branching", data=dat)
+@
+
+Here, we specified a Gaussian FMM and a branching process as the proliferation
+model.  We could also have chosen an FMM that corrects for autofluorescence
+(\texttt{fmm="af"}) or both autofluorescence and stochastic partitioning
+of fluorescent molecules into daughter cells upon division 
+(\texttt{fmm="af\_bp"}).  These additional FMM are described at length in
+Chauvin et al. (2016).
+In terms of proliferation models, a Cyton model \citep{Hawkins2007} could
+also have been used (\texttt{pro="cyton"}).
+
+The ``default'' values of the parameters can be accessed \textit{via} 
+\texttt{start} 
+(they can be used as starting values during optimization).
+The boundary for the acceptable values of these parameters is given 
+by \texttt{lower} and \texttt{upper}.
+
+<<>>=
+cbind(Start = start(mdl), Lower = lower(mdl), Upper = upper(mdl))
+@
+
+We see that by default the model features a large amount of 
+parameters.  It is unlikely that so many parameters can be optimized
+all at once, even with sophisticated gloabl search algorithms.  Therefore, we
+have to constrain the parameters to some specific values.  This can be
+achieved by specifying a set of constraints using a notation we developed
+for this package.  (However, this notation can be used to constrain any 
+nonlinear model in
+general.)
+
+<<>>=
+# nolint start
+cstr <- ~
+    pro:all:(f0/f/g0/g):{
+        ss <- 0.5
+    } + pro:all:{
+        res <- 0
+    } + fmm:{
+        c0 <- 0
+    } + ~pro:all:((f0/g0):{
+        delta <- 1
+    } + (f/g):{
+        delta <- 0.01
+    }) + pro:all:f0:{
+        mm <- .L2$f$mm
+    }
+# nolint end
+mdl <- update(mdl, data=dat, addcstr=cstr)
+@
+
+According to the above constraints, the distributions of times to death and
+times to first division are required to be exponential.  As to the times 
+to subsequent
+division, they have to follow a Dirac distribution (fixed-length cell cycles).
+Also, the mean times to division are always the same but 
+the times to death 
+could be different before and after the first division.  We also do not
+allow the presence of nongrowing bacteria after the first division.
+
+This model, along with the dataset, can be used with, e.g., \texttt{nls} to 
+perform
+a nonlinear least-square regression.  The least square formula can be
+retrived with \texttt{fd\_formula} (\texttt{mgen} is the maximum number of
+generation to fit):
+
+<<>>=
+fd_formula("mdl", mgen=10)
+@
+
+
+Because the problem still remains complex
+and it is difficult to determine appropriate starting values beforehand,
+local optimization as provided by \texttt{nls} is unlikely to succeed.
+Therefore, the user is advised to perform a global search using the
+``contributed'' function \texttt{nlsSA} (it is not formally part of the package
+as it deals with nonlinear regression in general and not FD \textit{per se}).
+This function behaves as if \texttt{nls} was called.  
+\texttt{nlsSA.R} provides other such variants of \texttt{nls}.
+
+<<>>=
+source(system.file("contrib", "nlsSA.R", package="fluodilution"))
+# Put maxit=100 to actually run the optimization
+fit <- nlsSA(
+    fd_formula("mdl", mgen = 10),
+    data = dat,
+    start = start(mdl),
+    lower = lower(mdl),
+    upper = upper(mdl),
+    trace = T,
+    control = list(simple.function = T, maxit = 1)
+)
+@
+
+As the object \texttt{fit} is an \texttt{nls} object, methods such as
+\texttt{coef}, \texttt{vcov}, \texttt{predict}
+or \texttt{summary}
+can be used.  Additionally, it is possible to ``unconstrain'' the model to
+get back to a full list of parameters:
+
+<<>>=
+coef(fit)
+unlist(relist(coef(fit), mdl))
+@
+
+In the example above, we have performed an ordinary least-square regression
+(OLS).  It is possible to improve on statistical efficiency by performing a 
+mixed-effects
+regression.  The OLS coefficients can be used as starting values for a call to
+\texttt{nlme} (package \textbf{nlme}).
+
+The package features other functions to support and enrich the workflow above.
+
+\bibliographystyle{plainnattrimmed}
+\bibliography{bibliovignette}
+
+\end{document}
