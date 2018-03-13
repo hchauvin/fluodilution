@@ -1,7 +1,6 @@
 # fluodilution
 
 [![Build status](https://badge.buildkite.com/1045d20ee21e2f2e21bd186af81829676e08593f8735001379.svg)](https://buildkite.com/hchauvin/fluodilution)
-[![Coverage Status](https://img.shields.io/codecov/c/github/hchauvin/fluodilution/master.svg)](https://codecov.io/github/hchauvin/fluodilution?branch=master)
 
 In biology, fluorescence Dilution (FD) experiments / proliferation
 assays are used to assess growth and migration at the single-cell level.
