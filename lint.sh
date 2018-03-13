@@ -41,13 +41,15 @@ function test_copyright() {
     --include '*.hpp' \
     --include '*.cc' \
     --include '*.c' \
-    --include ' *.cpp' \
+    --include '*.cpp' \
+    --include '*.sh' \
     --include 'BUILD.bazel' \
     --include 'BUILD' \
     --exclude-dir 'bazel-*' \
     --exclude-dir 'inst' \
     --exclude-dir 'man-*' \
-    --exclude '**/R/RcppExports.R' \
+    --exclude 'RcppExports.R' \
+    --exclude 'RcppExports.cpp' \
     --exclude-dir 'vendor')
   ok=1
   for i in $files; do
