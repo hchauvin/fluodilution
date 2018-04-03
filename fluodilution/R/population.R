@@ -423,9 +423,24 @@ cutoff <- function (x, cutoff = NULL, threshold = 0.01) {
       stop("'cutoff' names and 'Timepoint' levels are not the same ",
          "or exactly in the same order")
   }
+  get_cutoff <- if (length(cutoff) == 1) {
+    function (tp) cutoff
+  } else {
+    function (tp) {
+      ans <- cutoff[as.character(tp)]
+      if (is.null(ans)) {
+        stop(
+          "Timepoint ",
+          dput(tp),
+          " was not found in 'cutoff'; available timepoints: ",
+          paste0(collapse = ", ", names(cutoff)))
+      }
+      ans
+    }
+  }
   attr(data, ".was_cutoff") <- TRUE
   subset(data, Weight != "hist" |
-         (a > cutoff[as.character(Timepoint)] &
+         (a > get_cutoff(Timepoint) &
           is.finite(a) & y >= threshold))
 }
 

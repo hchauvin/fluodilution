@@ -237,7 +237,7 @@ weights.fd_modavg <- function (object, ...) {
 best <- function (tab, subset=TRUE, pos=1, verbose = TRUE) {
   modname <- as.character(tab[eval(substitute(subset), tab), ]$Modnames[pos])
   if (verbose) {
-    message("Best model:", modname)
+    message("Best model: ", modname)
   }
   ans <- attr(tab, "fit")[[modname]]
   ans$.picked <- modname

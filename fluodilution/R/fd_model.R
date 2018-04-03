@@ -186,7 +186,7 @@ fd_model <- function (fmm = "gaussian",
                       process = "fd_process_default",
                       memoise = TRUE) {
   if (!is.null(data) && !inherits(data, "fd_data"))
-    stop("'data' his not an 'fd_data'")
+    stop("'data' is not an 'fd_data'")
   if (!is.logical(boxed))
     stop("'boxed' should be either TRUE or FALSE")
   if (!is.cstr(constraints))
