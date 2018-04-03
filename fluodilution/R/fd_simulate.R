@@ -132,15 +132,18 @@ fd_simulate <- function (params, times, mgen=NULL, breaks=50, range=NULL,
                  length.out = breaks))
     }
 
-    data <- rbind(data,
-            expand.grid(Time = times,
-               Category = categories,
-               Individual = rownames(params),
-               a = 1L:(length(breaks) - 1),
-               Type = select[select %in% c("hists", "hists_lost")],
-               Weight = "hist",
-               Inoculum = "inoc_1",
-               y = 0)
+    data <- rbind(
+      data,
+      expand.grid(
+        Time = times,
+        Category = categories,
+        Individual = rownames(params),
+        a = 1L:(length(breaks) - 1),
+        Type = select[select %in% c("hists", "hists_lost")],
+        Weight = "hist",
+        Inoculum = "inoc_1",
+        y = 0
+      )
     )
     data$b <- breaks[-1][data$a]
     data$a <- breaks[-length(breaks)][data$a]
@@ -164,7 +167,9 @@ fd_simulate <- function (params, times, mgen=NULL, breaks=50, range=NULL,
   attr(data, ".was_cutoff") <- TRUE
   attr(data, "fmm") <- list(
     m0 = setNames(mean(model$fmm$m0), "inoc_1"),
-    sd0 = setNames(mean(model$fmm$sd0), "inoc_1")
+    sd0 = setNames(mean(model$fmm$sd0), "inoc_1"),
+    cctrans = model$fmm$cctrans,
+    htrans = model$fmm$htrans
   )
   attr(data, "pro") <- model$pro
   data <- fd_data(data, categories = categories)

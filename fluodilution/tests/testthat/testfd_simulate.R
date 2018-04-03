@@ -48,78 +48,86 @@ test_that("structure is well-formed", {
 })
 
 test_that("different param formats can work", {
-    un <- fd_unif("gaussian", "branching", n=1)
+  un <- fd_unif("gaussian", "branching", n=1)
 
-    # No model specified
-    expect_error(fd_simulate(un[1, ], 2),
-                 "no model specified, either through 'params' or 'model'")
+  # No model specified
+  expect_error(fd_simulate(un[1, ], 2),
+                "no model specified, either through 'params' or 'model'")
 
-    # As vector
-    invisible(fd_simulate(un[1, ], 2, model = model(un)))
+  # As vector
+  invisible(fd_simulate(un[1, ], 2, model = model(un)))
 
-    # As fit with coef()
-    un2 <- list(coefficients = un[1, ], .model = model(un))
-    invisible(fd_simulate(un2, 2))
+  # As fit with coef()
+  un2 <- list(coefficients = un[1, ], .model = model(un))
+  invisible(fd_simulate(un2, 2))
 
-    # As matrix
-    un3 <- fd_unif("gaussian", "branching", n=5)
-    invisible(fd_simulate(as.matrix(un3), 2, model = model(un3)))
+  # As matrix
+  un3 <- fd_unif("gaussian", "branching", n=5)
+  invisible(fd_simulate(as.matrix(un3), 2, model = model(un3)))
 
-    # Error
-    expect_error(
-      fd_simulate("ldfsdfsd", 2),
-      "no model specified, either through 'params' or 'model'")
-    expect_error(
-      fd_simulate(list(.model = "ldfsdfsd"), 2),
-      "'params' must either be the result of a fit, a vector or a matrix")
+  # Error
+  expect_error(
+    fd_simulate("ldfsdfsd", 2),
+    "no model specified, either through 'params' or 'model'")
+  expect_error(
+    fd_simulate(list(.model = "ldfsdfsd"), 2),
+    "'params' must either be the result of a fit, a vector or a matrix")
 })
 
 test_that("various ranges can be specified", {
-    un <- fd_unif("gaussian", "branching", n=1)
+  un <- fd_unif("gaussian", "branching", n=1)
 
-    # Automatic breaks
-    expect_silent(fd_simulate(un, 24, breaks=2))
-    expect_silent(fd_simulate(un, 24, breaks=1000))
+  # Automatic breaks
+  expect_silent(fd_simulate(un, 24, breaks=2))
+  expect_silent(fd_simulate(un, 24, breaks=1000))
 
-    # Manual breaks
-    ans <- fd_simulate(un, c(12, 24), breaks=c(13, 33, 211, 8500))
-    expect_equal(sort(unique(ans$a)), c(0, 13, 33, 211))
-    expect_equal(sort(unique(ans$b)), c(0, 33, 211, 8500))
+  # Manual breaks
+  ans <- fd_simulate(un, c(12, 24), breaks=c(13, 33, 211, 8500))
+  expect_equal(sort(unique(ans$a)), c(0, 13, 33, 211))
+  expect_equal(sort(unique(ans$b)), c(0, 33, 211, 8500))
 
-    # Range specified
-    ans <- fd_simulate(un, c(12, 24), breaks=10, range=c(13, 8500))
-    expect_equal(
-      sort(unique(ans$a)),
-      c(0, 13, 26.7418857331649, 54.9625952030159, 112.941629721289,
-        232.070501075511, 476.848996135572, 979.807210941429, 2013.26114488653,
-        4136.75239121832))
-    expect_equal(
-      sort(unique(ans$b)),
-      c(0, 26.7418857331649, 54.9625952030159, 112.941629721289,
-        232.070501075511,
-        476.848996135572, 979.807210941429, 2013.26114488653, 4136.75239121832,
-        8500))
+  # Range specified
+  ans <- fd_simulate(un, c(12, 24), breaks=10, range=c(13, 8500))
+  expect_equal(
+    sort(unique(ans$a)),
+    c(0, 13, 26.7418857331649, 54.9625952030159, 112.941629721289,
+      232.070501075511, 476.848996135572, 979.807210941429, 2013.26114488653,
+      4136.75239121832))
+  expect_equal(
+    sort(unique(ans$b)),
+    c(0, 26.7418857331649, 54.9625952030159, 112.941629721289,
+      232.070501075511,
+      476.848996135572, 979.807210941429, 2013.26114488653, 4136.75239121832,
+      8500))
 })
 
 test_that("'noise' works", {
-    un <- fd_unif("gaussian", "branching", n=1)
-    expect_silent(fd_simulate(un, 24, noise=c(0.05, 0.01)))
+  un <- fd_unif("gaussian", "branching", n=1)
+  expect_silent(fd_simulate(un, 24, noise=c(0.05, 0.01)))
 })
 
 test_that("it can cope with multiple inoculums", {
-    data(FdSTyphimuriumWTC57)
-    mdl <- fd_model(cutoff(FdSTyphimuriumWTC57),
-                           fmm="gaussian",
-                           proliferation="branching")
-    ans <- fd_simulate(start(mdl), 24, model=mdl)
-    expect_equal(levels(ans$Inoculum), c("inoc_1", "none"))
-    expect_equal(
-      attr(ans, "fmm"),
-      structure(
-        list(
-          m0 = structure(6.32986737172484, .Names = "inoc_1"),
-          sd0 = structure(0.524521260581569, .Names = "inoc_1")),
-        .Names = c("m0", "sd0")))
+  data(FdSTyphimuriumWTC57)
+  mdl <- fd_model(cutoff(FdSTyphimuriumWTC57),
+                  fmm="gaussian",
+                  proliferation="branching")
+  ans <- fd_simulate(start(mdl), 24, model=mdl)
+  expect_equal(levels(ans$Inoculum), c("inoc_1", "none"))
+  expect_setequal(names(attr(ans, "fmm")), c("m0", "sd0", "cctrans", "htrans"))
+  expect_equal(
+    attr(ans, "fmm")$m0,
+    structure(6.32986737172484, .Names = "inoc_1"))
+  expect_equal(
+    attr(ans, "fmm")$sd0,
+    structure(0.524521260581569, .Names = "inoc_1"))
+  expect_equal(class(attr(ans, "fmm")$cctrans), "trans")
+  expect_equal(attr(ans, "fmm")$cctrans$name, "identity")
+  expect_equal(attr(ans, "fmm")$cctrans$transform(c(10, 20)), c(10, 20))
+  expect_equal(attr(ans, "fmm")$cctrans$inverse(c(10, 20)), c(10, 20))
+  expect_equal(class(attr(ans, "fmm")$htrans), "trans")
+  expect_equal(attr(ans, "fmm")$htrans$name, "identity")
+  expect_equal(attr(ans, "fmm")$htrans$transform(c(10, 20)), c(10, 20))
+  expect_equal(attr(ans, "fmm")$htrans$inverse(c(10, 20)), c(10, 20))
 })
 
 test_that("'fd_proportions' works", {

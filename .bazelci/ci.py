@@ -318,7 +318,7 @@ def results_view_url(invocation_id, platform):
 
 
 def update_pull_request_status(git_repository, commit, state, details_url, description, context):
-    raise BuildkiteException("not implemented.")
+    print("update_pull_request_status: not implemented")
     # gh = login(token=fetch_github_token())
     # owner, repo = owner_repository_from_url(git_repository)
     # repo = gh.repository(owner=owner, repository=repo)

@@ -250,8 +250,7 @@ fd_create <- function (value, fmm = NULL, categories = NULL,
         fmm0$m0[as.character(meta$Inoculum[i])] <<- m["mean"]
         fmm0$sd0[as.character(meta$Inoculum[i])] <<- m["sd"]
         NULL
-      }
-      else {
+      } else {
         # Read specific channel
         if (NROW(flowCore::exprs(rawData)) == 0 ||
             NROW(d <- flowCore::exprs(rawData)) == 0)

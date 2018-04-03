@@ -805,11 +805,11 @@ new_http_archive(
 new_http_archive(
     name = "R_Matrix",
     build_file = "cran/BUILD.Matrix",
-    sha256 = "16e51aef69dca94dc4fcba8aa35a0039d9d0e6abd9cc017c095e954e1e2ca4f2",
+    sha256 = "7dfb6b3312fbcac27fcfc006b048bc1ba776ec43e340d6330c45b79185f58ec8",
     strip_prefix = "Matrix",
     urls = [
-        "https://cloud.r-project.org/src/contrib/Matrix_1.2-12.tar.gz",
-        "https://cloud.r-project.org/src/contrib/Archive/Matrix/Matrix_1.2-12.tar.gz",
+        "https://cloud.r-project.org/src/contrib/Matrix_1.2-13.tar.gz",
+        "https://cloud.r-project.org/src/contrib/Archive/Matrix/Matrix_1.2-13.tar.gz",
     ],
 )
 
