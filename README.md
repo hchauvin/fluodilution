@@ -2,7 +2,7 @@
 
 [![Build status](https://badge.buildkite.com/1045d20ee21e2f2e21bd186af81829676e08593f8735001379.svg)](https://buildkite.com/hchauvin/fluodilution)
 
-In biology, fluorescence Dilution (FD) experiments / proliferation
+In biology, Fluorescence Dilution (FD) experiments / proliferation
 assays are used to assess growth and migration at the single-cell level.
 Mathematical models can be used to extract parameters such as the division,
 death and migration rates and their variability.
